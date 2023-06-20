@@ -1,4 +1,3 @@
-import streamlit as st
 from llama_index import LLMPredictor, PromptHelper, ServiceContext, VectorStoreIndex, SimpleDirectoryReader, StorageContext, load_index_from_storage
 import os
 import openai
@@ -21,7 +20,8 @@ def chat_bot(request, temp, chunk_overlap):
     
     index = load_index_from_storage(storage_context=storage_context, service_context=service_context)
     chat_engine = index.as_chat_engine()
-    response = chat_engine.chat(request)
+    markdown_request = request + " Please format your reply in markdown."
+    response = chat_engine.chat(markdown_request)
 
     print(response)
     return str(response)
